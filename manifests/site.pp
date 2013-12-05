@@ -15,10 +15,10 @@ define zotonic::site (
     encoding => 'UTF8',
   }
 
-  postgresql_psql { 'create language "plpgsql"':
-    unless    => "select count(*) from pg_language where lanname='plpgsql'",
+  postgresql_psql { 'CREATE LANGUAGE "plpgsql"':
+    unless    => "SELECT lanname FROM pg_language WHERE lanname='plpgsql'",
     db        => 'zotonic',
-	require   => Postgresql::Server::Db[$db_name]
+	  require   => Postgresql::Server::Db[$db_name]
   }
 
   # Add site to /etc/hosts

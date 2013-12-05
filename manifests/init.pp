@@ -61,13 +61,19 @@ class zotonic (
         recurse => true
       }
 
+      if !defined(Package['git']) {
+        package { 'git':
+          ensure => present
+        }
+      }
+
       vcsrepo { $dir:
         ensure   => present,
         provider => git,
         source   => 'git://github.com/zotonic/zotonic.git',
         revision => "release-${version}",
         user     => $user,
-		    require  => File[$dir]
+		    require  => [ File[$dir], Package['git'] ]
       }
 
       # Set HOME to prevent 'erlexec: HOME must be set'

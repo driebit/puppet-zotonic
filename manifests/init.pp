@@ -66,7 +66,8 @@ class zotonic (
         provider => git,
         source   => 'git://github.com/zotonic/zotonic.git',
         revision => "release-${version}",
-        user     => $user
+        user     => $user,
+		require  => File[$dir]
       }
 
       exec { 'make zotonic':

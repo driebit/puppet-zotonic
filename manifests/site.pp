@@ -28,6 +28,7 @@ define zotonic::site (
 
   # Create a symlink in the zotonic/priv/sites directory
   file { "${zotonic::dir}/priv/sites/${name}":
-    target => $dir
+    target => $dir,
+    notify => Service['zotonic']
   }
 }

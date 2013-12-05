@@ -8,7 +8,7 @@ class zotonic (
   $user                = 'vagrant',
   $sites_dir           = '/vagrant'
 ) {
-  class { 'postgresql::server': }
+  include postgresql::server
 
   if $erlang_package {
     if !defined(Package[$erlang_package]) {
@@ -67,21 +67,23 @@ class zotonic (
         source   => 'git://github.com/zotonic/zotonic.git',
         revision => "release-${version}",
         user     => $user,
-		require  => File[$dir]
+		    require  => File[$dir]
       }
 
+      # Set HOME to prevent 'erlexec: HOME must be set'
       exec { 'make zotonic':
-        command => '/usr/bin/make',
-        cwd     => $dir,
-        require => [ Vcsrepo[$dir], Package[$erlang_package] ],
-        creates => "${dir}/ebin"
+        command     => '/usr/bin/make',
+        cwd         => $dir,
+        require     => [ Vcsrepo[$dir], Package[$erlang_package] ],
+        environment => 'HOME=/home/vagrant',
+        creates     => "${dir}/ebin"
       }
 
       # Create Zotonic service
       file { '/etc/init.d/zotonic':
         content => template('zotonic/service.erb'),
         mode    => 'a+x',
-        require => [ Vcsrepo[$dir] ],
+        require => Exec['make zotonic'],
         before  => Service['zotonic']
       }
 

@@ -4,7 +4,7 @@ define zotonic::site (
   $db_name     = 'zotonic',
   $db_user     = 'zotonic',
   $db_password = 'zotonic',
-  $skeleton    = 'blog',
+  $skeleton    = 'blog'
 ) {
   include zotonic
 

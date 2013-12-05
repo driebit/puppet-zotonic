@@ -47,7 +47,19 @@ You can configure a Zotonic site with:
 zotonic::site { 'mysite': }
 ```
 
-If you with to set up a new site, you may want to use Zotonic’s
+The options default to:
+
+```puppet
+zotonic::site { 'mysite':
+  dir         = '/vagrant',
+  db_name     = 'zotonic',
+  db_user     = 'zotonic',
+  db_password = 'zotonic',
+  skeleton    = 'blog'
+}
+```
+
+If you with to set up a *new* site, you may want to use Zotonic’s
 [addsite command](http://zotonic.com/docs/latest/tutorials/install-addsite.html):
 
 ```bash

@@ -17,7 +17,8 @@ define zotonic::site (
 
   postgresql_psql { 'create language "plpgsql"':
     unless    => "select count(*) from pg_language where lanname='plpgsql'",
-    db        => 'zotonic'
+    db        => 'zotonic',
+	require   => Postgresql::Server::Db[$db_name]
   }
 
   # Add site to /etc/hosts

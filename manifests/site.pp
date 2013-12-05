@@ -17,7 +17,7 @@ define zotonic::site (
 
   postgresql_psql { 'CREATE LANGUAGE "plpgsql"':
     unless    => "SELECT lanname FROM pg_language WHERE lanname='plpgsql'",
-    db        => 'zotonic',
+    db        => $db_name,
 	  require   => Postgresql::Server::Db[$db_name]
   }
 

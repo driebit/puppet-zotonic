@@ -51,11 +51,11 @@ The options default to:
 
 ```puppet
 zotonic::site { 'mysite':
-  dir         = '/vagrant',
-  db_name     = 'zotonic',
-  db_user     = 'zotonic',
-  db_password = 'zotonic',
-  skeleton    = 'blog'
+  dir         => '/vagrant',
+  db_name     => 'zotonic',
+  db_user     => 'zotonic',
+  db_password => 'zotonic',
+  skeleton    => 'blog'
 }
 ```
 

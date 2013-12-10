@@ -1,4 +1,4 @@
-driebit/puppet-xhgui
+driebit/puppet-zotonic
 ====================
 
 Introduction

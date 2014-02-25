@@ -4,7 +4,7 @@ class zotonic (
   $password            = '',
   $listen_port         = '8000',
   $dir                 = '/opt/zotonic',
-  $version             = '0.9.4',
+  $version             = 'release-0.9.4',
   $user                = 'vagrant',
   $sites_dir           = '/vagrant'
 ) {
@@ -71,7 +71,7 @@ class zotonic (
         ensure   => present,
         provider => git,
         source   => 'git://github.com/zotonic/zotonic.git',
-        revision => "release-${version}",
+        revision => $version,
         user     => $user,
 		    require  => [ File[$dir], Package['git'] ]
       }

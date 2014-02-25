@@ -27,7 +27,7 @@ Install a specific Zotonic version:
 
 ```puppet
 class { 'zotonic':
-  version => '0.9.4'
+  version => 'release-0.9.4'
 }
 ```
 

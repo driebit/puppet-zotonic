@@ -4,7 +4,7 @@ class zotonic (
   $password            = '',
   $listen_port         = '8000',
   $dir                 = '/opt/zotonic',
-  $version             = '0.10-dev',
+  $version             = '0.9.4',
   $user                = 'vagrant',
   $sites_dir           = '/vagrant'
 ) {

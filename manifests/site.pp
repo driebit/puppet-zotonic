@@ -8,11 +8,15 @@ define zotonic::site (
 ) {
   include zotonic
 
+  postgresql::server::role { $db_user:
+  }
+
   postgresql::server::db { $db_name:
     user     => $db_user,
     owner    => $db_user,
     password => $db_password,
     encoding => 'UTF8',
+    require  => Postgresql::Server::Role[$db_user],
   }
 
   postgresql_psql { 'CREATE LANGUAGE "plpgsql"':

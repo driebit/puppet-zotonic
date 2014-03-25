@@ -1,10 +1,9 @@
 # See http://zotonic.com/docs/latest/tutorials/install-addsite.html
 define zotonic::site (
-  $dir         = '/vagrant',
+  $dir,
   $db_name     = 'zotonic',
   $db_user     = 'zotonic',
   $db_password = 'zotonic',
-  $skeleton    = 'blog'
 ) {
   include zotonic
 

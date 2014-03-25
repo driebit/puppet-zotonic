@@ -1,14 +1,23 @@
-class zotonic (
+# Installs Zotonic
+# See also https://github.com/zotonic/zotonic/blob/master/zotonic_install
+class zotonic
+(
   $erlang_package      = 'erlang',
   $imagemagick_package = '',
   $password            = '',
   $listen_port         = '8000',
   $dir                 = '/opt/zotonic',
   $version             = 'release-0.9.4',
-  $user                = 'vagrant',
-  $sites_dir           = '/vagrant'
+  $user                = 'zotonic',
 ) {
   include postgresql::server
+
+  # Create zotonic user if necessary
+  if !defined(User[$user]) {
+    user { $user:
+      ensure => present,
+    }
+  }
 
   if $erlang_package {
     if !defined(Package[$erlang_package]) {
@@ -58,7 +67,8 @@ class zotonic (
         ensure  => directory,
         owner   => $user,
         group   => $user,
-        recurse => true
+        recurse => true,
+        require => User[$user],
       }
 
       if !defined(Package['git']) {

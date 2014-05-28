@@ -21,7 +21,7 @@ define zotonic::site
   # If sites share a database they each need their own schema
   if $db_schema {
     zotonic::schema { $db_schema:
-      db    => $db_name,
+      db => $db_name,
     }
   }
 

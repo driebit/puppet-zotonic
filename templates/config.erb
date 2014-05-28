@@ -5,7 +5,16 @@
 %% Delete this file to reset Zotonic to its defaults (when Zotonic is not running).
 %% Consult the config.in file for available options and their defaults.
 
-[{password,"<%= @password %>"},
+[
+ {dbdatabase, "<%= @db_name %>"},
+ {dbschema, "<%= @db_schema %>"},
+ {dbpassword, "<%= @db_password %>"},
+ {dbuser, "<%= @db_username %>"},
+ {dbport, <%= @db_port %>},
+ {dbhost, "<%= @db_host %>"},
+
+ {password,"<%= @password %>"},
  {listen_ip,any},
  {modify_date,{{2013,12,5},{10,0,52}}},
- {listen_port,<%= @listen_port %>}].
+ {listen_port,<%= @listen_port %>}
+].

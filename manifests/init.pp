@@ -9,6 +9,12 @@ class zotonic
   $dir                 = '/opt/zotonic',
   $version             = 'release-0.9.4',
   $user                = 'zotonic',
+  $db_name             = 'zotonic',
+  $db_schema           = 'public',
+  $db_username         = 'zotonic',
+  $db_password         = '',
+  $db_host             = 'localhost',
+  $db_port             = 5432,
 ) {
   include postgresql::server
 
@@ -108,6 +114,12 @@ class zotonic
         target => "${dir}/bin/zotonic"
       }
     }
+  }
+
+  # Prepare database
+  zotonic::db { $db_name:
+    username => $db_username,
+    password => $db_password,
   }
 
   # Configure Zotonic

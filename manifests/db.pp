@@ -1,8 +1,8 @@
 # Prepare a PostgreSQL database for Zotonic
 define zotonic::db
 (
-  $username,
-  $password,
+  $username,  # PostgreSQL username
+  $password,  # PostgreSQL password
 ) {
   include zotonic
 

@@ -2,19 +2,18 @@
 # See also https://github.com/zotonic/zotonic/blob/master/zotonic_install
 class zotonic
 (
-  $erlang_package      = 'erlang',
-  $imagemagick_package = '',
-  $password            = '',
-  $listen_port         = '8000',
-  $dir                 = '/opt/zotonic',
-  $version             = 'release-0.9.4',
-  $user                = 'zotonic',
-  $db_name             = 'zotonic',
-  $db_schema           = 'public',
-  $db_username         = 'zotonic',
-  $db_password         = '',
-  $db_host             = 'localhost',
-  $db_port             = 5432,
+  $password            = '',                 # admin password
+  $listen_port         = '8000',             # Zotonic port
+  $dir                 = '/opt/zotonic',     # Installation directory
+  $version             = 'release-0.10.0p1', # Version to install
+  $user                = 'zotonic',          # User that owns Zotonic
+  $db_name             = 'zotonic',          # PostgreSQL database for Zotonic
+  $db_username         = 'zotonic',          # PostgreSQL username for Zotonic
+  $db_password         = '',                 # PostgreSQL password for Zotonic
+  $db_host             = 'localhost',        # PostgreSQL host
+  $db_port             = 5432,               # PostgreSQL port
+  $erlang_package      = 'erlang',           # Erlang package name
+  $imagemagick_package = ''                  # ImageMagick package name (a Zotonic dependency)
 ) {
   include postgresql::server
 
@@ -89,7 +88,7 @@ class zotonic
         source   => 'git://github.com/zotonic/zotonic.git',
         revision => $version,
         user     => $user,
-		    require  => [ File[$dir], Package['git'] ]
+        require  => [ File[$dir], Package['git'] ]
       }
 
       # Set HOME to prevent 'erlexec: HOME must be set'
@@ -97,7 +96,7 @@ class zotonic
         command     => '/usr/bin/make',
         cwd         => $dir,
         require     => [ Vcsrepo[$dir], Package[$erlang_package] ],
-        environment => 'HOME=/home/vagrant',
+        environment => 'HOME=/tmp/erlang', # Is this a sane default?
         creates     => "${dir}/ebin"
       }
 

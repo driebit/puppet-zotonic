@@ -8,7 +8,6 @@ define zotonic::db
 
   postgresql::server::db { $name:
     user     => $username,
-    owner    => $username,
     password => $password,
     encoding => 'UTF8',
   }

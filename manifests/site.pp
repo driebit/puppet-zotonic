@@ -1,12 +1,15 @@
+# Prepares Zotonic and PostgreSQL for a site
 # See http://zotonic.com/docs/latest/tutorials/install-addsite.html
 define zotonic::site
 (
-  $dir,
-  $db_name     = undef,
-  $db_user     = undef,
-  $db_password = undef,
-  $db_schema   = undef,
-  $hostname    = undef,
+  $dir,                       # Directory that contains the site
+  $admin_password = 'admin',  # Administrator password (defaults to admin)
+  $db_name        = undef,    # PostgreSQL database for the site
+  $db_user        = undef,    # PostgreSQL user for the site
+  $db_password    = undef,    # PostgreSQL password for the site
+  $db_schema      = 'public', # PostgreSQL schema for the site (defaults to public)
+  $hostname       = undef,    # Site hostname
+  $config_file    = 'puppet'  # Config file that will be placed in $dir/config.d,
 ) {
   include zotonic
 
@@ -36,7 +39,7 @@ define zotonic::site
       ensure => directory,
     }
 
-    file { "${dir}/config.d/ginger":
+    file { "${dir}/config.d/${config_file}":
       content => template('zotonic/site-config.erb'),
       require => File["${dir}/config.d"],
       notify  => Service['zotonic']

@@ -1,8 +1,12 @@
 name 'driebit-zotonic'
-version '0.1.0'
-source 'git://github.com/driebit/puppet-zotonic.git'
+version '0.2.0'
 author 'Driebit'
-description 'Install and configure the Zotonic CMS'
+summary 'Install and configure the Zotonic CMS'
+description 'Download and install a specific version of the Zotonic CMS.
+    Prepare PostgreSQL by creating a database/schema.'
+license 'MIT'
+project_page 'https://github.com/driebit/puppet-zotonic'
+source 'git://github.com/driebit/puppet-zotonic.git'
 
 dependency 'puppetlabs/apt', '1.x'
 dependency 'puppetlabs/postgresql', '3.x'

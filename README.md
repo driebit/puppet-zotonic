@@ -15,53 +15,51 @@ Usage
 class { 'zotonic': }
 ```
 
-Change installation directory:
+Customise as follows:
 
 ```puppet
 class { 'zotonic':
-  dir => '/opt/zotonic'
+  password            => '',                 # admin password
+  listen_port         => '8000',             # Zotonic port
+  dir                 => '/opt/zotonic',     # Installation directory
+  version             => 'release-0.10.0p1', # Version to install
+  user                => 'zotonic',          # User that owns Zotonic
+  db_name             => 'zotonic',          # PostgreSQL database for Zotonic
+  db_username         => 'zotonic',          # PostgreSQL username for Zotonic
+  db_password         => '',                 # PostgreSQL password for Zotonic
+  db_host             => 'localhost',        # PostgreSQL host
+  db_port             => 5432,               # PostgreSQL port
+  erlang_package      => 'erlang',           # Erlang package name
+  imagemagick_package => ''                  # ImageMagick package name (a Zotonic dependency)
 }
 ```
 
-Install a specific Zotonic version:
+### Add a site to Zotonic
 
-```puppet
-class { 'zotonic':
-  version => 'release-0.9.4'
-}
-```
-
-Set the admin password:
-
-```puppet
-class { 'zotonic':
-  password => 'supersecret'
-}
-```
-
-### Add a site
-
-You can configure a Zotonic site with:
-
-```puppet
-zotonic::site { 'mysite': }
-```
-
-The options default to:
+You can add a site to your Zotonic setup with:
 
 ```puppet
 zotonic::site { 'mysite':
-  dir         => '/vagrant',
-  db_name     => 'zotonic',
-  db_user     => 'zotonic',
-  db_password => 'zotonic',
-  skeleton    => 'blog'
+  dir => '/home/me/mysite'   # Directory that contains the site
 }
 ```
 
-If you with to set up a *new* site, you may want to use Zotonic’s
-[addsite command](http://zotonic.com/docs/latest/tutorials/install-addsite.html):
+This will:
+* set up PostgreSQL for the site
+* create a site config in `/home/me/mysite/config.d/`
+* create a symlink from the Zotonic sites dir to your site’s directory.
 
-```bash
-$ zotonic addsite -s blog mysite
+Customise as follows:
+
+```puppet
+zotonic::site { 'mysite':
+  dir            => '/home/me/mysite',
+  admin_password => 'admin',  # Administrator password (defaults to admin)
+  db_name        => undef,    # PostgreSQL database for the site (defaults to Zotonic database)
+  db_user        => undef,    # PostgreSQL user for the site (defaults to Zotonic username)
+  db_password    => undef,    # PostgreSQL password for the site (defaults to Zotonic password)
+  db_schema      => 'public', # PostgreSQL schema for the site (defaults to public)
+  hostname       => undef,    # Site hostname (defaults to sitename.fqdn)
+  config_file    => 'puppet'  # Config file that will be placed in $dir/config.d,
+}
 ```

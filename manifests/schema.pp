@@ -19,6 +19,6 @@ define zotonic::schema
   postgresql_psql { "GRANT ALL ON SCHEMA ${schema} TO ${db_user}":
     db      => $db,
     unless  => "SELECT 1 WHERE has_schema_privilege('${db_user}', '${schema}', 'USAGE')",
-    require => Zotonic::Db[$db],
+    require => Postgresql_psql["CREATE SCHEMA ${schema}"],
   }
 }

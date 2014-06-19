@@ -110,7 +110,8 @@ class zotonic
 
       # Create symlink to the zotonic binary, so it can be called system-wide
       file { '/usr/local/bin/zotonic':
-        target => "${dir}/bin/zotonic"
+        target  => "${dir}/bin/zotonic",
+        require => Exec['make zotonic']
       }
     }
   }

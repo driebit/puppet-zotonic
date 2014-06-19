@@ -2,24 +2,26 @@
 # See http://zotonic.com/docs/latest/tutorials/install-addsite.html
 define zotonic::site
 (
-  $dir,                       # Directory that contains the site
-  $admin_password = 'admin',  # Administrator password (defaults to admin)
-  $db_name        = undef,    # PostgreSQL database for the site
-  $db_user        = undef,    # PostgreSQL user for the site
-  $db_password    = undef,    # PostgreSQL password for the site
-  $db_schema      = 'public', # PostgreSQL schema for the site (defaults to public)
-  $hostname       = undef,    # Site hostname
-  $config_file    = 'puppet'  # Config file that will be placed in $dir/config.d,
+  $dir,                                # Directory that contains the site
+  $admin_password = 'admin',           # Administrator password (defaults to admin)
+  $db_name        = $zotonic::db_name, # PostgreSQL database for the site (defaults to Zotonic db)
+  $db_user        = undef,             # PostgreSQL user for the site
+  $db_password    = undef,             # PostgreSQL password for the site
+  $db_schema      = 'public',          # PostgreSQL schema for the site (defaults to public)
+  $hostname       = undef,             # Site hostname
+  $config_file    = 'puppet'           # Config file that will be placed in $dir/config.d,
 ) {
   include zotonic
 
   # If each site runs in a separate database
-  if $db_name {
+  if $db_name != $zotonic::db_name {
     zotonic::db { $db_name:
       username => $db_user,
       password => $db_password,
     }
   }
+
+  notify { "DB $db_name": }
 
   # If sites share a database they each need their own schema
   if $db_schema {

@@ -29,7 +29,7 @@ define zotonic::site
   }
 
   # Add site to /etc/hosts
-  host { $name:
+  host { $hostname:
     ip => '127.0.0.1',
   }
 

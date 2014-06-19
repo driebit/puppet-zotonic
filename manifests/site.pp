@@ -21,8 +21,6 @@ define zotonic::site
     }
   }
 
-  notify { "DB $db_name": }
-
   # If sites share a database they each need their own schema
   if $db_schema {
     zotonic::schema { $db_schema:

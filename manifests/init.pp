@@ -125,6 +125,7 @@ class zotonic
   # Configure Zotonic
   file { "${dir}/priv/config":
     content => template('zotonic/config.erb'),
+    require => Exec['make zotonic'],
     notify  => Service['zotonic']
   }
 

@@ -13,7 +13,8 @@ class zotonic
   $db_host             = 'localhost',        # PostgreSQL host
   $db_port             = 5432,               # PostgreSQL port
   $erlang_package      = 'erlang',           # Erlang package name
-  $imagemagick_package = ''                  # ImageMagick package name (a Zotonic dependency)
+  $imagemagick_package = '',                 # ImageMagick package name (a Zotonic dependency)
+  $binary              = '/usr/local/bin/zotonic' # Zotonic binary, so it works from all dirs
 ) {
   include postgresql::server
 
@@ -109,7 +110,7 @@ class zotonic
       }
 
       # Create symlink to the zotonic binary, so it can be called system-wide
-      file { '/usr/local/bin/zotonic':
+      file { $binary:
         target  => "${dir}/bin/zotonic",
         require => Exec['make zotonic']
       }

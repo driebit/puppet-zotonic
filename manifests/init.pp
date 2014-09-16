@@ -14,7 +14,8 @@ class zotonic
   $db_port             = 5432,               # PostgreSQL port
   $erlang_package      = 'erlang',           # Erlang package name
   $imagemagick_package = '',                 # ImageMagick package name (a Zotonic dependency)
-  $binary              = '/usr/local/bin/zotonic' # Zotonic binary, so it works from all dirs
+  $binary              = '/usr/local/bin/zotonic', # Zotonic binary, so it works from all dirs
+  $source              = 'git://github.com/zotonic/zotonic.git',
 ) {
   include postgresql::server
 
@@ -86,7 +87,7 @@ class zotonic
       vcsrepo { $dir:
         ensure   => present,
         provider => git,
-        source   => 'git://github.com/zotonic/zotonic.git',
+        source   => $source,
         revision => $version,
         user     => $user,
         require  => [ File[$dir], Package['git'] ]

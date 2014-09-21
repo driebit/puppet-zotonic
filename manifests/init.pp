@@ -4,7 +4,8 @@ class zotonic
 (
   $password            = '',                 # admin password
   $listen_port         = '8000',             # Zotonic port
-  $dir                 = '/opt/zotonic',     # Installation directory
+  $dir                 = $zotonic::params::dir,        # Installation directory
+  $module_dir          = $zotonic::params::module_dir, # Zotonic modules dir
   $version             = 'release-0.10.0p1', # Version to install
   $user                = 'zotonic',          # User that owns Zotonic
   $db_name             = 'zotonic',          # PostgreSQL database for Zotonic
@@ -16,7 +17,8 @@ class zotonic
   $imagemagick_package = '',                 # ImageMagick package name (a Zotonic dependency)
   $binary              = '/usr/local/bin/zotonic', # Zotonic binary, so it works from all dirs
   $source              = 'git://github.com/zotonic/zotonic.git',
-) {
+) inherits ::zotonic::params {
+
   include postgresql::server
 
   # Create zotonic user if necessary

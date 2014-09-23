@@ -2,12 +2,9 @@
 define zotonic::module(
   $update = true,   # Keep the module up-to-date    
 ) {
-
-  zotonic::command { "modules install ${name}":
-    creates => "${zotonic::module_dirdir}/${name}",    
-  }
+  zotonic::module::install { "${name}": }
 
   if $update {
-    zotonic::command { "modules update ${name}": }
+    zotonic::module::update { "${name}": }
   }
 }

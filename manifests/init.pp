@@ -2,21 +2,27 @@
 # See also https://github.com/zotonic/zotonic/blob/master/zotonic_install
 class zotonic
 (
+  $version,                                  # Version to install              
   $password            = '',                 # admin password
+  $listen_ip           = 'any',              # Listen IP address
   $listen_port         = '8000',             # Zotonic port
-  $dir                 = $zotonic::params::dir,        # Installation directory
-  $module_dir          = $zotonic::params::module_dir, # Zotonic modules dir
-  $version             = 'release-0.10.0p1', # Version to install
-  $user                = 'zotonic',          # User that owns Zotonic
+  $dir                 = $zotonic::params::dir,         # Installation directory
+  $sites_dir           = $zotonic::params::sites_dir,   # User sites dir
+  $modules_dir         = $zotonic::params::modules_dir, # Zotonic modules dir
+  $config_dir          = "/home/${user}/.zotonic",
+  $user                = $zotonic::params::user, # User that owns Zotonic
   $db_name             = 'zotonic',          # PostgreSQL database for Zotonic
   $db_username         = 'zotonic',          # PostgreSQL username for Zotonic
   $db_password         = '',                 # PostgreSQL password for Zotonic
   $db_host             = 'localhost',        # PostgreSQL host
   $db_port             = 5432,               # PostgreSQL port
+  $timezone            = $zotonic::params::timezone,
   $erlang_package      = 'erlang',           # Erlang package name
   $imagemagick_package = '',                 # ImageMagick package name (a Zotonic dependency)
   $binary              = '/usr/local/bin/zotonic', # Zotonic binary, so it works from all dirs
   $source              = 'git://github.com/zotonic/zotonic.git',
+  $template_modified_check = true,
+  $deps                = []
 ) inherits ::zotonic::params {
 
   include postgresql::server
@@ -126,13 +132,33 @@ class zotonic
     password => $db_password,
   }
 
-  # Configure Zotonic
+  # Zotonic <= 0.10 config file
   file { "${dir}/priv/config":
     content => template('zotonic/config.erb'),
     require => Exec['make zotonic'],
     notify  => Service['zotonic']
   }
 
+  file { $config_dir:
+    ensure => directory,
+    owner  => $user,
+  }
+  
+  # Zotonic >= 0.11 config files
+  file { "${config_dir}/zotonic.config":
+    content => template('zotonic/zotonic.config.erb'),
+    owner   => $user,
+    require => [ Exec['make zotonic'], File[$config_dir] ],
+    notify  => Service['zotonic'],
+  }
+  
+  file { "${config_dir}/erlang.config":
+    content => template('zotonic/erlang.config.erb'),
+    owner   => $user,
+    require => [ Exec['make zotonic'], File[$config_dir] ],
+    notify  => Service['zotonic'],
+  }
+  
   # Start Zotonic service
   service { 'zotonic':
     ensure  => running

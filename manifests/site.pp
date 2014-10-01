@@ -2,7 +2,8 @@
 # See http://zotonic.com/docs/latest/tutorials/install-addsite.html
 define zotonic::site
 (
-  $dir,                                # Directory that contains the site
+  $dir = undef,                        # Directory that contains the site if different than
+                                       # the Zotonic sites dir
   $admin_password = 'admin',           # Administrator password (defaults to admin)
   $db_name        = $zotonic::db_name, # PostgreSQL database for the site (defaults to Zotonic db)
   $db_user        = undef,             # PostgreSQL user for the site
@@ -11,9 +12,15 @@ define zotonic::site
   $hostname       = undef,             # Site hostname
   $port           = 8000,              # Site port (defaults to 8000)
   $config_dir     = "${dir}/config.d", # Directory that config_file will be placed in
-  $config_file    = 'puppet'           # Name of config file
+  $config_file    = 'puppet',          # Name of config file
 ) {
   include zotonic
+  
+  if undef == $dir {
+    $site_dir = "${zotonic::sites_dir}/${name}" 
+  } else {
+    $site_dir = $dir
+  }
 
   # If each site runs in a separate database
   if $db_name != $zotonic::db_name {
@@ -50,9 +57,11 @@ define zotonic::site
     }
   }
 
-  # Create a symlink in the zotonic/priv/sites directory
-  file { "${zotonic::dir}/priv/sites/${name}":
-    target => $dir,
-    notify => Service['zotonic']
+  if $dir {
+    # Create a symlink in the Zotonic sites directory
+    file { "${zotonic::sites_dir}/${name}":
+      target => $site_dir,
+      notify => Service['zotonic']
+    }
   }
 }

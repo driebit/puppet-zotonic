@@ -46,9 +46,9 @@ You can also install unofficial modules from any Git repository:
 
 ```puppet
 zotonic::git_module { 'mod_awesome':
-  module_dir => '/zotonic/modules',   # Defaults to priv/modules in Zotonic dir
-  url        => 'https://github.com/driebit/mod_import_anymeta.git',   # Git repo URL
-  version    => 'master'
+  modules_dir => '/zotonic/modules',   # Defaults to priv/modules in Zotonic dir
+  url         => 'https://github.com/driebit/mod_import_anymeta.git',   # Git repo URL
+  version     => 'master'
 }
 ```
 

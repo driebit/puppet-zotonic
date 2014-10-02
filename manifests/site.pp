@@ -17,8 +17,10 @@ define zotonic::site
   include zotonic
   
   if undef == $dir {
-    $site_dir = "${zotonic::sites_dir}/${name}" 
+    # Generic Zotonic sites dir   
+    $site_dir = "${zotonic::sites_dir}/${name}"
   } else {
+    # Some other sites dir
     $site_dir = $dir
   }
 
@@ -61,7 +63,8 @@ define zotonic::site
     # Create a symlink in the Zotonic sites directory
     file { "${zotonic::sites_dir}/${name}":
       target => $site_dir,
-      notify => Service['zotonic']
+      notify => Service['zotonic'],
+      owner  => $zotonic::user,
     }
   }
 }

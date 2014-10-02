@@ -98,7 +98,8 @@ class zotonic
         source   => $source,
         revision => $version,
         user     => $user,
-        require  => [ File[$dir], Package['git'] ]
+        require  => [ File[$dir], Package['git'] ],
+        notify   => Exec['make zotonic'], 
       }
 
       # Set HOME to prevent 'erlexec: HOME must be set'
@@ -135,27 +136,43 @@ class zotonic
   # Zotonic <= 0.10 config file
   file { "${dir}/priv/config":
     content => template('zotonic/config.erb'),
-    require => Exec['make zotonic'],
+    require => Vcsrepo[$dir],
     notify  => Service['zotonic']
   }
 
   file { $config_dir:
-    ensure => directory,
-    owner  => $user,
+    ensure  => directory,
+    owner   => $user,
+    require => Vcsrepo[$dir],
+  }
+
+  # Create parent dir for sites and modules (Zotonic >= 0.11)
+  file { "${dir}/user":
+    ensure  => directory,
+    owner   => $user,
+    require => File[$dir],
+  }  
+
+  # Created by Zotonic on first start, but create it here so we can add sites/
+  # symlinks to it before starting Zotonic
+  file { $sites_dir:
+    ensure  => directory,
+    owner   => $user,
+    require => File["${dir}/user"],
   }
   
   # Zotonic >= 0.11 config files
   file { "${config_dir}/zotonic.config":
     content => template('zotonic/zotonic.config.erb'),
     owner   => $user,
-    require => [ Exec['make zotonic'], File[$config_dir] ],
+    require => File[$config_dir],
     notify  => Service['zotonic'],
   }
   
   file { "${config_dir}/erlang.config":
     content => template('zotonic/erlang.config.erb'),
     owner   => $user,
-    require => [ Exec['make zotonic'], File[$config_dir] ],
+    require => File[$config_dir],
     notify  => Service['zotonic'],
   }
   

@@ -150,7 +150,7 @@ class zotonic
   file { "${dir}/user":
     ensure  => directory,
     owner   => $user,
-    require => File[$dir],
+    require => Vcsrepo[$dir],
   }  
 
   # Created by Zotonic on first start, but create it here so we can add sites/

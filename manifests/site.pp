@@ -11,7 +11,7 @@ define zotonic::site
   $db_schema      = 'public',          # PostgreSQL schema for the site (defaults to public)
   $hostname       = undef,             # Site hostname
   $port           = 8000,              # Site port (defaults to 8000)
-  $config_dir     = "${dir}/config.d", # Directory that config_file will be placed in
+  $config_dir     = 'config.d',        # Directory that config_file will be placed in
   $config_file    = 'puppet',          # Name of config file
 ) {
   include zotonic
@@ -23,7 +23,9 @@ define zotonic::site
     # Some other sites dir
     $site_dir = $dir
   }
-
+  
+  $site_config_dir = "${site_dir}/${config_dir}"
+  
   # If each site runs in a separate database
   if $db_name != $zotonic::db_name {
     zotonic::db { $db_name:
@@ -46,15 +48,15 @@ define zotonic::site
 
   # Create a config file in config.d
   if $config_dir and $config_file {
-    if !defined(File[$config_dir]) {
-      file { $config_dir:
+    if !defined(File[$site_config_dir]) {
+      file { $site_config_dir:
         ensure => directory,
       }
     }
 
-    file { "${config_dir}/${config_file}":
+    file { "${site_config_dir}/${config_file}":
       content => template('zotonic/site-config.erb'),
-      require => File[$config_dir],
+      require => File[$site_config_dir],
       notify  => Service['zotonic']
     }
   }

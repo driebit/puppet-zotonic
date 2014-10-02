@@ -154,8 +154,9 @@ class zotonic
   }  
 
   # Created by Zotonic on first start, but create it here so we can add sites/
-  # symlinks to it before starting Zotonic
-  file { $sites_dir:
+  # symlinks to it before starting Zotonic. For custom sites dir (so other than
+  # zotonic/user/sites), assume that the dir already exists.
+  file { $zotonic::params::sites_dir:
     ensure  => directory,
     owner   => $user,
     require => File["${dir}/user"],

@@ -5,7 +5,7 @@
   {hostname, "<%= @hostname %>:<%= @port %>"},
   {hostaliases, [
     <% @hostaliases.each_with_index do |hostalias, i| -%>
-      "<%= hostalias %>"<%= dep['tag'] %>"}}}<%= ',' if i < (@deps.size - 1) %>
+      "<%= hostalias %>"<%= ',' if i < (@hostaliases.size - 1) %>
     <% end -%>
   ]},
   {dbdatabase, "<%= @db_name %>"},

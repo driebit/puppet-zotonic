@@ -25,7 +25,9 @@ class zotonic
   $deps                = []
 ) inherits ::zotonic::params {
 
-  include postgresql::server
+  class { 'postgresql::server':
+    encoding => 'UTF8',
+  }
 
   # Create zotonic user if necessary
   if !defined(User[$user]) {

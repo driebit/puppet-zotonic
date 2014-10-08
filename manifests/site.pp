@@ -6,13 +6,15 @@ define zotonic::site
                                        # the Zotonic sites dir
   $admin_password = 'admin',           # Administrator password (defaults to admin)
   $db_name        = $zotonic::db_name, # PostgreSQL database for the site (defaults to Zotonic db)
-  $db_user        = undef,             # PostgreSQL user for the site
-  $db_password    = undef,             # PostgreSQL password for the site
+  $db_user        = $zotonic::db_username, # PostgreSQL user for the site
+  $db_password    = $zotonic::db_password, # PostgreSQL password for the site
   $db_schema      = 'public',          # PostgreSQL schema for the site (defaults to public)
   $hostname       = undef,             # Site hostname
   $port           = 8000,              # Site port (defaults to 8000)
   $config_dir     = 'config.d',        # Directory that config_file will be placed in
-  $config_file    = 'puppet',          # Name of config file
+  $config_file    = 'puppet',          # Name of config file,
+  $enabled        = true,              # Whether site is available,
+  $hostaliases    = [],
 ) {
   include zotonic
   
@@ -57,7 +59,6 @@ define zotonic::site
     file { "${site_config_dir}/${config_file}":
       content => template('zotonic/site-config.erb'),
       require => File[$site_config_dir],
-      notify  => Service['zotonic']
     }
   }
 
@@ -65,7 +66,6 @@ define zotonic::site
     # Create a symlink in the Zotonic sites directory
     file { "${zotonic::sites_dir}/${name}":
       target => $site_dir,
-      notify => Service['zotonic'],
       owner  => $zotonic::user,
     }
   }

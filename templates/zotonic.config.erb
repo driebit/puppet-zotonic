@@ -1,5 +1,7 @@
 %%
-%% Managed by Puppet
+%% This file is managed by Puppet
+%%
+%% This is the Zotonic config for >= 0.11. See zotonic/zotonic.config.in.
 %%
 %% -*- mode: erlang -*-
 %% This is the global config file for Zotonic.
@@ -21,33 +23,15 @@
 %% Be careful with the comma after each option, exclude it after the last option.
 [{zotonic,
   [
-
-%%% Path configuration
-   
-   %% Where the Zotonic sites are located
    {user_sites_dir, "<%= @sites_dir %>"},
-
-   %% Where the extra Zotonic modules are located (those installed with 'zotonic modules install mod_...')
    {user_modules_dir, "<%= @modules_dir %>"},
-
-%%% Default timezone (for example: <<"Europe/Berlin">>)
    {timezone, <<"<%= @timezone %>">>},
-
-%%% PostgreSQL database defaults.
-%%% These are the defaults for the equally named options in your site's config file.
    {dbschema, "<%= @db_schema %>"},
    {dbpassword, "<%= @db_password %>"},
    {dbuser, "<%= @db_username %>"},
    {dbport, <%= @db_port %>},
    {dbhost, "<%= @db_host %>"},
-
-%%% IP address on which Zotonic will listen for HTTP requests.
-%%% Always overridden by the ZOTONIC_IP environment variable.
-%%% Use 'any' for all IP addresses.
    {listen_ip, <%= @listen_ip %>},
-
-%%% Port on which Zotonic will listen for HTTP requests.
-%%% Always overridden by the ZOTONIC_PORT environment variable.
    {listen_port, <%= @listen_port %>},
 
 %%% SMTP outbound relay configuration.

@@ -16,6 +16,7 @@ class zotonic
   $db_password         = '',                 # PostgreSQL password for Zotonic
   $db_host             = 'localhost',        # PostgreSQL host
   $db_port             = 5432,               # PostgreSQL port
+  $db_schema           = 'public',           # Default database schema
   $timezone            = $zotonic::params::timezone,
   $erlang_package      = 'erlang',           # Erlang package name
   $imagemagick_package = '',                 # ImageMagick package name (a Zotonic dependency)

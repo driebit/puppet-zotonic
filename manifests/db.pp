@@ -12,7 +12,8 @@ define zotonic::db
     encoding => 'UTF8',
   }
 
-  postgresql_psql { 'CREATE LANGUAGE "plpgsql"':
+  postgresql_psql { "CREATE LANGUAGE plpgsql on ${name}":
+    command   => 'CREATE LANGUAGE "plpgsql"',
     unless    => "SELECT lanname FROM pg_language WHERE lanname='plpgsql'",
     db        => $name,
     require   => Postgresql::Server::Db[$name]

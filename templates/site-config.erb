@@ -1,6 +1,15 @@
+%% This file is managed by Puppet
+%%
+%% Parameters in this file will override those in sitename/config
 [
   {hostname, "<%= @hostname %>:<%= @port %>"},
+  {hostaliases, [
+    <% @hostaliases.each_with_index do |hostalias, i| -%>
+      "<%= hostalias %>"<%= dep['tag'] %>"}}}<%= ',' if i < (@deps.size - 1) %>
+    <% end -%>
+  ]},
   {dbdatabase, "<%= @db_name %>"},
   {dbschema, "<%= @db_schema %>"},
-  {admin_password, "<%= @admin_password %>"}
+  {admin_password, "<%= @admin_password %>"},
+  {enabled, <%= @enabled %>}
 ].

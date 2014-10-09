@@ -9,7 +9,7 @@ class zotonic
   $dir                 = $zotonic::params::dir,         # Installation directory
   $sites_dir           = $zotonic::params::sites_dir,   # User sites dir
   $modules_dir         = $zotonic::params::modules_dir, # Zotonic modules dir
-  $config_dir          = "/home/${user}/.zotonic",
+  $config_dir          = "/etc/zotonic",
   $user                = $zotonic::params::user, # User that owns Zotonic
   $db_name             = 'zotonic',          # PostgreSQL database for Zotonic
   $db_username         = 'zotonic',          # PostgreSQL username for Zotonic

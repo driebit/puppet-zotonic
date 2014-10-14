@@ -37,8 +37,9 @@ define zotonic::site
   }
 
   # If sites share a database they each need their own schema
-  if $db_schema {
-    zotonic::schema { $db_schema:
+  # The default schema 'public' is assumed to exist.
+  if $db_schema != 'public' {
+    zotonic::schema { "${db_name}_${db_schema}":
       db => $db_name,
     }
   }

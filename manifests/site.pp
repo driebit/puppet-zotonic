@@ -28,9 +28,15 @@ define zotonic::site
   
   $site_config_dir = "${site_dir}/${config_dir}"
   
+  if undef == $db_name {
+    $site_db_name = $title
+  } else {
+    $site_db_name = $db_name
+  }
+
   # If each site runs in a separate database
-  if $db_name != $zotonic::db_name {
-    zotonic::db { $db_name:
+  if $site_db_name != $zotonic::db_name {
+    zotonic::db { $site_db_name:
       username => $db_user,
       password => $db_password,
     }
@@ -39,8 +45,8 @@ define zotonic::site
   # If sites share a database they each need their own schema
   # The default schema 'public' is assumed to exist.
   if $db_schema != 'public' {
-    zotonic::schema { "${db_name}_${db_schema}":
-      db => $db_name,
+    zotonic::schema { "${site_db_name}_${db_schema}":
+      db => $site_db_name,
     }
   }
 

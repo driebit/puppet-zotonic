@@ -11,7 +11,7 @@ class zotonic
   $modules_dir         = $zotonic::params::modules_dir, # Zotonic modules dir
   $config_dir          = "/etc/zotonic",
   $user                = $zotonic::params::user, # User that owns Zotonic
-  $db_name             = 'zotonic',          # PostgreSQL database for Zotonic
+  $db_name             = undef,          # PostgreSQL database for Zotonic
   $db_username         = 'zotonic',          # PostgreSQL username for Zotonic
   $db_password         = '',                 # PostgreSQL password for Zotonic
   $db_host             = 'localhost',        # PostgreSQL host
@@ -131,10 +131,12 @@ class zotonic
   }
 
   # Prepare database
-  zotonic::db { $db_name:
-    username => $db_username,
-    password => $db_password,
-  }
+  if $db_name {
+    zotonic::db { $db_name:
+      username => $db_username,
+      password => $db_password,
+    }
+  }   
 
   # Zotonic <= 0.10 config file
   file { "${dir}/priv/config":

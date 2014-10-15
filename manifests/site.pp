@@ -2,7 +2,7 @@
 # See http://zotonic.com/docs/latest/tutorials/install-addsite.html
 define zotonic::site
 (
-  $dir = undef,                        # Directory that contains the site if different than
+  $dir = "${zotonic::sites_dir}/${name}", # Directory that contains the site
                                        # the Zotonic sites dir
   $admin_password = 'admin',           # Administrator password (defaults to admin)
   $db_name        = $zotonic::db_name, # PostgreSQL database for the site (defaults to Zotonic db)
@@ -11,23 +11,25 @@ define zotonic::site
   $db_schema      = 'public',          # PostgreSQL schema for the site (defaults to public)
   $hostname       = undef,             # Site hostname
   $port           = 8000,              # Site port (defaults to 8000)
-  $config_dir     = 'config.d',        # Directory that config_file will be placed in
-  $config_file    = 'puppet',          # Name of config file,
+  $config_dir     = undef,             # Directory that config_file will be placed in
+  $config_file    = 'puppet',          # Name of config file (set to undef to not create file)
   $enabled        = true,              # Whether site is available,
   $hostaliases    = [],
 ) {
   include zotonic
   
-  if undef == $dir {
-    # Generic Zotonic sites dir   
-    $site_dir = "${zotonic::sites_dir}/${name}"
+  # If config_dir is undef, assume site/config.d.
+  # If config_dir is set, use that instead. This allows users to place the site
+  # config outside the site dir itself, for instance when doing versioned 
+  # deployments of the site with symlinks from each config.d dir to a shared
+  # config.d dir.
+  if undef == $config_dir {
+    # Default config dir
+    $site_config_dir = "${dir}/config.d"
   } else {
-    # Some other sites dir
-    $site_dir = $dir
+    $site_config_dir = $config_dir
   }
-  
-  $site_config_dir = "${site_dir}/${config_dir}"
-  
+
   if undef == $db_name {
     $site_db_name = $title
   } else {
@@ -56,7 +58,7 @@ define zotonic::site
   }
 
   # Create a config file in config.d
-  if $config_dir and $config_file {
+  if $config_file {
     if !defined(File[$site_config_dir]) {
       file { $site_config_dir:
         ensure => directory,
@@ -69,10 +71,10 @@ define zotonic::site
     }
   }
 
-  if $dir {
-    # Create a symlink in the Zotonic sites directory
+  # If the site dir is not in the Zotonic sites dir, create a symlink to it
+  if $dir != "${zotonic::sites_dir}/${name}" {
     file { "${zotonic::sites_dir}/${name}":
-      target => $site_dir,
+      target => $dir,
       owner  => $zotonic::user,
     }
   }

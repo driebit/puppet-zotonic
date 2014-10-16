@@ -48,7 +48,8 @@ define zotonic::site
   # The default schema 'public' is assumed to exist.
   if $db_schema != 'public' {
     zotonic::schema { "${site_db_name}_${db_schema}":
-      db => $site_db_name,
+      db     => $site_db_name,
+      schema => $db_schema,
     }
   }
 

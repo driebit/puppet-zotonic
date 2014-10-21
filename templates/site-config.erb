@@ -1,8 +1,13 @@
 %% This file is managed by Puppet
 %%
 %% Parameters in this file will override those in sitename/config
+%% "<%= scope.lookupvar('zotonic::listen_port').class %>" "<%= @port.class %>"
 [
+<% if scope.lookupvar('zotonic::listen_port') != @port -%>
   {hostname, "<%= @hostname %>:<%= @port %>"},
+  <% else -%>
+  {hostname, "<%= @hostname %>"},
+  <% end -%>
   {hostaliases, [
     <% @hostaliases.each_with_index do |hostalias, i| -%>
       "<%= hostalias %>"<%= ',' if i < (@hostaliases.size - 1) %>

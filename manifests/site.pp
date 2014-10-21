@@ -15,6 +15,7 @@ define zotonic::site
   $config_file    = 'puppet',          # Name of config file (set to undef to not create file)
   $enabled        = true,              # Whether site is available,
   $hostaliases    = [],
+  $redirect       = true,              # Redirect hostaliases to the main url, default true
 ) {
   include zotonic
   

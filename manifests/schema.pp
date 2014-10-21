@@ -9,16 +9,17 @@ define zotonic::schema
     fail('You must include the Zotonic base class before using any Zotonic resources')
   }
 
-  postgresql_psql { "CREATE SCHEMA ${schema}":
+  postgresql_psql { "Create schema ${schema} in ${db}":
+    command => "CREATE SCHEMA ${schema}",
     unless  => "SELECT schema_name FROM information_schema.schemata WHERE schema_name = '${schema}'",
     db      => $db,
     require => Zotonic::Db[$db],
-  }
+  } ->
 
   # Postgresql::server::grant doesn't yet support schema grants, so do it manually
-  postgresql_psql { "GRANT ALL ON SCHEMA ${schema} TO ${db_user}":
+  postgresql_psql { "Grant all on schema ${schema} to ${db_user} in ${db}":
+    command => "GRANT ALL ON SCHEMA ${schema} TO ${db_user}",
     db      => $db,
     unless  => "SELECT 1 WHERE has_schema_privilege('${db_user}', '${schema}', 'USAGE')",
-    require => Postgresql_psql["CREATE SCHEMA ${schema}"],
   }
 }

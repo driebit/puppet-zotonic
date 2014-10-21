@@ -8,7 +8,7 @@
   <% else -%>
   {hostname, "<%= @hostname %>"},
   <% end -%>
-  {hostaliases, [
+  {hostalias, [
     <% @hostaliases.each_with_index do |hostalias, i| -%>
       "<%= hostalias %>"<%= ',' if i < (@hostaliases.size - 1) %>
     <% end -%>

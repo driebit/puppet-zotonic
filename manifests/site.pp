@@ -54,11 +54,6 @@ define zotonic::site
     }
   }
 
-  # Add site to /etc/hosts
-  host { $hostname:
-    ip => '127.0.0.1',
-  }
-
   # Create a config file in config.d
   if $config_file {
     if !defined(File[$site_config_dir]) {

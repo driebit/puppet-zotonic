@@ -10,7 +10,7 @@ define zotonic::site
   $db_password    = $zotonic::db_password, # PostgreSQL password for the site
   $db_schema      = 'public',          # PostgreSQL schema for the site (defaults to public)
   $hostname       = undef,             # Site hostname
-  $port           = 8000,              # Site port (defaults to 8000)
+  $port           = undef,             # Site port for in hostname (default none)
   $config_dir     = undef,             # Directory that config_file will be placed in
   $config_file    = 'puppet',          # Name of config file (set to undef to not create file)
   $enabled        = true,              # Whether site is available,

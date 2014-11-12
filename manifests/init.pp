@@ -19,7 +19,7 @@ class zotonic
   $db_schema           = 'public',           # Default database schema
   $timezone            = $zotonic::params::timezone,
   $erlang_package      = 'erlang',           # Erlang package name
-  $imagemagick_package = '',                 # ImageMagick package name (a Zotonic dependency)
+  $imagemagick_package = undef,              # ImageMagick package name (a Zotonic dependency)
   $binary              = '/usr/local/bin/zotonic', # Zotonic binary, so it works from all dirs
   $source              = 'git://github.com/zotonic/zotonic.git',
   $template_modified_check = true,

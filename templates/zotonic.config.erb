@@ -35,10 +35,10 @@
    {listen_port, <%= @listen_port %>},
 
 %%% SMTP outbound relay configuration.
-   %% {smtp_relay, true},
-   %% {smtp_host, "localhost"},
-   %% {smtp_port, 2525},
-   %% {smtp_ssl, true},
+   {smtp_relay, <%= @smtp_relay %>},
+   {smtp_host, "<%= @smtp_host %>"},
+   {smtp_port, <%= @smtp_port %>},
+   {smtp_ssl, <%= @smtp_ssl %>},
 
 %%% SMTP extra relay options:
 %%% some picky/buggy/misconfigured relays might need one of these to be enabled.

@@ -8,7 +8,7 @@ license 'MIT'
 project_page 'https://github.com/driebit/puppet-zotonic'
 source 'git://github.com/driebit/puppet-zotonic.git'
 
-dependency 'puppetlabs/apt', '>= 1.x'
-dependency 'puppetlabs/postgresql', '>= 3.x'
+dependency 'puppetlabs/apt', '>= 1.0'
+dependency 'puppetlabs/postgresql', '>= 3.0'
 dependency 'puppetlabs/vcsrepo', '>= 0.2.0'
 

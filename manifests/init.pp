@@ -30,6 +30,8 @@ class zotonic
   $deps                = []
 ) inherits ::zotonic::params {
 
+  include zotonic::service
+
   class { 'postgresql::server':
     encoding => 'UTF8',
   }
@@ -118,14 +120,6 @@ class zotonic
         creates     => "${dir}/ebin"
       }
 
-      # Create Zotonic service
-      file { '/etc/init.d/zotonic':
-        content => template('zotonic/service.erb'),
-        mode    => 'a+x',
-        require => Exec['make zotonic'],
-        before  => Service['zotonic']
-      }
-
       # Create symlink to the zotonic binary, so it can be called system-wide
       file { $binary:
         target  => "${dir}/bin/zotonic",
@@ -184,10 +178,5 @@ class zotonic
     owner   => $user,
     require => File[$config_dir],
     notify  => Service['zotonic'],
-  }
-  
-  # Start Zotonic service
-  service { 'zotonic':
-    ensure  => running
   }
 }

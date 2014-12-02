@@ -88,6 +88,11 @@
 %%% they are rendered. Turn this off in production to increase
 %%% performance. However, you need to do an explicit z:flush() to see template changes.
     {template_modified_check, <%= @template_modified_check %>},
+
+%% Custom configuration params
+<% @params.each do |name, value| -%>
+    {<%= name %>, <%= value %>},
+<% end -%>
     
 %%% List with extra dependencies which get fetched and compiled by rebar
     {deps,

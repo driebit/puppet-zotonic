@@ -27,7 +27,8 @@ class zotonic
   $binary              = '/usr/local/bin/zotonic', # Zotonic binary, so it works from all dirs
   $source              = 'git://github.com/zotonic/zotonic.git',
   $template_modified_check = true,
-  $deps                = []
+  $deps                = [],
+  $params              = []                  # Custom configuration params
 ) inherits ::zotonic::params {
 
   include zotonic::service

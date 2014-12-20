@@ -17,6 +17,7 @@ class zotonic
   $db_host             = 'localhost',        # PostgreSQL host
   $db_port             = 5432,               # PostgreSQL port
   $db_schema           = 'public',           # Default database schema
+  $create_db           = true,               # Allow db user to create more dbs
   $smtp_relay          = true,
   $smtp_host           = "localhost",
   $smtp_port           = 25,
@@ -135,15 +136,12 @@ class zotonic
       username => $db_username,
       password => $db_password,
     }
-  }   
-
-  # Zotonic <= 0.10 config file
-  file { "${dir}/priv/config":
-    content => template('zotonic/config.erb'),
-    require => Vcsrepo[$dir],
-    notify  => Service['zotonic']
+    
+    zotonic::db_user { $db_username:
+      create_db => $create_db,
+    }
   }
-
+  
   file { $config_dir:
     ensure  => directory,
     owner   => $user,

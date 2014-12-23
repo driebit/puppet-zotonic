@@ -7,11 +7,13 @@
   <% else -%>
   {hostname, "<%= @hostname %>"},
   <% end -%>
+  <% if @hostaliases and not @hostaliases.empty? %>
   {hostalias, [
     <% @hostaliases.each_with_index do |hostalias, i| -%>
       "<%= hostalias %>"<%= ',' if i < (@hostaliases.size - 1) %>
     <% end -%>
   ]},
+  <% end -%>
   {redirect, <%= @redirect %>},
   {dbdatabase, "<%= @site_db_name %>"},
   {dbschema, "<%= @db_schema %>"},

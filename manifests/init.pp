@@ -11,8 +11,8 @@ class zotonic
   $modules_dir         = $zotonic::params::modules_dir, # Zotonic modules dir
   $config_dir          = "/etc/zotonic",
   $user                = $zotonic::params::user, # User that owns Zotonic
-  $db_name             = undef,          # PostgreSQL database for Zotonic
-  $db_username         = 'zotonic',          # PostgreSQL username for Zotonic
+  $db_name             = undef,              # PostgreSQL database for Zotonic
+  $db_username         = undef,              # PostgreSQL username for Zotonic
   $db_password         = '',                 # PostgreSQL password for Zotonic
   $db_host             = 'localhost',        # PostgreSQL host
   $db_port             = 5432,               # PostgreSQL port
@@ -130,15 +130,19 @@ class zotonic
     }
   }
 
-  # Prepare database
+  # Create database that sites can share
   if $db_name {
     zotonic::db { $db_name:
       username => $db_username,
       password => $db_password,
     }
-    
+  }
+
+  # Create user that sites can share between multiple databases
+  if $db_username {
     zotonic::db_user { $db_username:
       create_db => $create_db,
+      password  => $db_password,
     }
   }
   

@@ -12,7 +12,7 @@ define zotonic::site
   $hostname       = undef,             # Site hostname
   $port           = undef,             # Site port for in hostname (default none)
   $config_dir     = undef,             # Directory that config_file will be placed in
-  $config_file    = 'puppet',          # Name of config file (set to undef to not create file)
+  $config_file    = undef,             # Name of config file (not created by default)
   $enabled        = true,              # Whether site is available,
   $hostaliases    = [],
   $redirect       = true,              # Redirect hostaliases to the main url, default true

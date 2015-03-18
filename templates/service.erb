@@ -4,4 +4,4 @@
 # This file is managed by Puppet
 #
 
-sudo -u <%= @user %> <%= @dir %>/bin/zotonic $1
+sudo -u <%= scope.lookupvar('zotonic::user') -%> <%= scope.lookupvar('zotonic::dir') -%>/bin/zotonic $1

@@ -13,13 +13,13 @@ class zotonic::service(
         content => template('zotonic/service.erb'),
         mode    => 'a+x',
         require => Exec['make zotonic'],
-        before  => Service['zotonic']
+        before  => Service["${zotonic::service}"]
       }
     }
   }
 
   # Start Zotonic service
-  service { 'zotonic':
+  service { "${zotonic::service}":
     ensure => $ensure,
     enable => $enable,
   }

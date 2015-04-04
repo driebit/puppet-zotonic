@@ -174,13 +174,13 @@ class zotonic
     content => template('zotonic/zotonic.config.erb'),
     owner   => $user,
     require => File[$config_dir],
-    notify  => Service['zotonic'],
+    notify  => Service[$service],
   }
   
   file { "${config_dir}/erlang.config":
     content => template('zotonic/erlang.config.erb'),
     owner   => $user,
     require => File[$config_dir],
-    notify  => Service['zotonic'],
+    notify  => Service[$service],
   }
 }

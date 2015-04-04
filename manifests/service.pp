@@ -12,7 +12,6 @@ class zotonic::service(
       file { '/etc/init.d/zotonic':
         content => template('zotonic/service.erb'),
         mode    => 'a+x',
-        require => Exec['make zotonic'],
         before  => Service[$zotonic::service]
       }
     }
@@ -22,5 +21,6 @@ class zotonic::service(
   service { $zotonic::service:
     ensure => $ensure,
     enable => $enable,
+    require => Exec['make zotonic'],
   }
 }

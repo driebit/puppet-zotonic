@@ -29,8 +29,8 @@ class zotonic
   $source              = 'git://github.com/zotonic/zotonic.git',
   $template_modified_check = true,
   $deps                = [],
-  $params              = []                  # Custom configuration params
-  $service             = "zotonic"
+  $params              = [],                 # Custom configuration params
+  $service             = "zotonic",
 ) inherits ::zotonic::params {
 
   include zotonic::service

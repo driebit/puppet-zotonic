@@ -120,8 +120,8 @@ class zotonic
         cwd         => $dir,
         require     => [ Vcsrepo[$dir], Package[$erlang_package] ],
         environment => 'HOME=/tmp/erlang', # Is this a sane default?
-        creates     => "${dir}/ebin/zotonic.app"
-        timeout     => 0
+        creates     => "${dir}/ebin/zotonic.app",
+        timeout     => 0,
       }
 
       # Create symlink to the zotonic binary, so it can be called system-wide

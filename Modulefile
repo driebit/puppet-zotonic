@@ -11,4 +11,5 @@ source 'git://github.com/driebit/puppet-zotonic.git'
 dependency 'puppetlabs/apt', '>= 1.0.0'
 dependency 'puppetlabs/postgresql', '>= 3.0.0'
 dependency 'puppetlabs/vcsrepo', '>= 0.2.0'
+dependency 'puppetlabs/git', '>= 0.4.0'
 

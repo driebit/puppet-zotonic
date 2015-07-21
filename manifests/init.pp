@@ -98,10 +98,8 @@ class zotonic
         require => User[$user],
       }
 
-      if !defined(Package['git']) {
-        package { 'git':
-          ensure => present
-        }
+      if !defined(Class['::git']) {
+        include git
       }
 
       vcsrepo { $dir:

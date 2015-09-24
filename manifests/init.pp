@@ -120,6 +120,7 @@ class zotonic
         environment => 'HOME=/tmp/erlang', # Is this a sane default?
         creates     => "${dir}/ebin/zotonic.app",
         timeout     => 0,
+        user        => $user,
       }
 
       # Create symlink to the zotonic binary, so it can be called system-wide

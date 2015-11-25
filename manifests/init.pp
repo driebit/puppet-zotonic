@@ -94,7 +94,7 @@ class zotonic
         ensure  => directory,
         owner   => $user,
         group   => $user,
-        recurse => true,
+        recurse => false,
         require => User[$user],
       }
 

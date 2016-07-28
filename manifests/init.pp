@@ -31,6 +31,7 @@ class zotonic
   $deps                = [],
   $params              = [],                 # Custom configuration params
   $service             = "zotonic",
+  $ip_whitelist        = "192.168.0.0/16,172.12.0.0/12,10.0.0.0/8,127.0.0.0/8,::1",
 ) inherits ::zotonic::params {
 
   include zotonic::service

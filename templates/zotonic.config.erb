@@ -89,6 +89,9 @@
 %%% performance. However, you need to do an explicit z:flush() to see template changes.
     {template_modified_check, <%= @template_modified_check %>},
 
+%%% Admin IP-address whitelist (for default password)
+    {ip_whitelist, "<%= @ip_whitelist %>"},
+
 %% Custom configuration params
 <% @params.each do |name, value| -%>
     {<%= name %>, <%= value %>},

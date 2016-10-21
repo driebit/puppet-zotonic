@@ -31,14 +31,23 @@
     ]}
  ]},
 
- {lager,
-  [{handlers,
-    [
-      {lager_console_backend, info},
-      {lager_file_backend, [{file, "priv/log/error.log"},   {level, error}]},
-      {lager_file_backend, [{file, "priv/log/console.log"}, {level, info}]}
+  {lager, [
+    {handlers, [
+      <%- @lager_handlers.each_with_index do |handler, i| -%>
+        {<%= handler['type'] -%>,
+          <%- if handler['config'].is_a?(Hash) -%>
+            [
+              <% (handler['config']).each_with_index do |(key, value), j| -%>
+                {<%= key %>, <%= value %>}<%= ',' if j < (handler['config'].size - 1) %>
+              <% end %>
+            ]
+          <%- else -%>
+            <%= handler['config'] %>
+          <%- end -%>
+        }<%= ',' if i < (@lager_handlers.size - 1) %>
+      <% end %>
     ]},
-   {crash_log, "priv/log/crash.log"}
+    {crash_log, "priv/log/crash.log"}
   ]},
 
  {webzmachine,

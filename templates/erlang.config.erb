@@ -16,6 +16,10 @@
     {dir, "priv/mnesia"}
  ]},
 
+ {s3filez, [
+    {max_connections, 2048}
+ ]},
+
  {emqtt, [
     {auth, {zotonic, []}},
     {access_control, {zotonic, []}},

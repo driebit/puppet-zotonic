@@ -13,10 +13,13 @@
       "<%= hostalias %>"<%= ',' if i < (@hostaliases.size - 1) %>
     <% end -%>
   ]},
-  <% end -%>
+<% end -%>
   {redirect, <%= @redirect %>},
   {dbdatabase, "<%= @site_db_name %>"},
   {dbschema, "<%= @db_schema %>"},
   {admin_password, "<%= @admin_password %>"},
-  {enabled, <%= @enabled %>}
+  {enabled, <%= @enabled %>},
+  {seo, [
+    {noindex, <%= @seo_noindex %>}
+  ]
 ].

@@ -18,6 +18,7 @@ class zotonic
   $db_port             = 5432,               # PostgreSQL port
   $db_schema           = 'public',           # Default database schema
   $create_db           = true,               # Allow db user to create more dbs
+  $seo_noindex         = false,              # Prevent search engines from indexing all sites
   $smtp_relay          = true,
   $smtp_host           = "localhost",
   $smtp_port           = 25,

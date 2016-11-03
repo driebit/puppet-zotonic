@@ -16,7 +16,7 @@ define zotonic::site
   $enabled        = true,              # Whether site is available,
   $hostaliases    = [],
   $redirect       = true,              # Redirect hostaliases to the main url, default true
-  $seo_noindex    = false,             # Prevent search engines from indexing the site
+  $seo_noindex    = $zotonic::seo_noindex, # Prevent search engines from indexing the site
 ) {
   include zotonic
   

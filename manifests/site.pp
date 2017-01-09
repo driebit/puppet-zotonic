@@ -17,6 +17,7 @@ define zotonic::site
   $hostaliases    = [],
   $redirect       = true,              # Redirect hostaliases to the main url, default true
   $seo_noindex    = $zotonic::seo_noindex, # Prevent search engines from indexing the site
+  $protocol       = $zotonic::protocol, # Site protocol: http or https
 ) {
   include zotonic
   

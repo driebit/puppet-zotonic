@@ -19,6 +19,9 @@
   {dbschema, "<%= @db_schema %>"},
   {admin_password, "<%= @admin_password %>"},
   {enabled, <%= @enabled %>},
+<% if @protocol -%>
+  {protocol, "<%= @protocol %>"},
+<% end -%>
   {seo, [
     {noindex, <%= @seo_noindex %>}
   ]}

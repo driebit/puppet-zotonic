@@ -77,6 +77,14 @@
 %%% Location of wmtrace logs (defaults to "priv/wmtrace" if not specified).
    {wmtrace_dir, "priv/log/wmtrace/"},
 
+<% @erlang_config.each_with_index do |(app, params), i| -%>
+    {<%= app %>, [
+    <%- @params.each_with_index do |(key, value), i| -%>
+        {<%= key %>, <%= value %>}<%= ',' if i < (@params.size - 1) %>
+    <%- end %>
+    ]},
+<% end -%>
+
 %%% Which sendfile command to use: disable, yaws, erlang
    {use_sendfile, erlang}
 

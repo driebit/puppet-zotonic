@@ -56,8 +56,8 @@
 
 <% @erlang_config.each_with_index do |(app, params), i| -%>
     {<%= app %>, [
-    <%- @params.each_with_index do |(key, value), i| -%>
-        {<%= key %>, <%= value %>}<%= ',' if i < (@params.size - 1) %>
+    <%- params.each_with_index do |(key, value), i| -%>
+        {<%= key %>, <%= value %>}<%= ',' if i < (params.size - 1) %>
     <%- end %>
     ]},
 <% end -%>

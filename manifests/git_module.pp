@@ -4,7 +4,7 @@ define zotonic::git_module(
   $url
 ) {
   vcsrepo { "${zotonic::modules_dir}/${name}":
-    ensure   => latest,
+    ensure   => present,
     provider => git,
     source   => $url,
     revision => $version,

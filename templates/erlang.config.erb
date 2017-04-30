@@ -4,12 +4,29 @@
 %% -*- mode: erlang -*-
 [
 
- {exometer, [{predefined, [
-    {[erlang, memory], {function, erlang, memory, [], value, []}, []},
-    {[erlang, system_info], {function, erlang, system_info, ['$dp'], value, [process_count]}, []},
-    {[erlang, statistics], {function, erlang, statistics, ['$dp'], value, [run_queue]}, []},
-    {[erlang, io], {function, erlang, statistics, [io], match, {{'_', input}, {'_', output}}}, []}
-   ]}
+ {exometer, [
+    {predefined, [
+        {[erlang, memory], {function, erlang, memory, [], value, []}, []},
+        {[erlang, system_info], {function, erlang, system_info, ['$dp'], value, [process_count]}, []},
+        {[erlang, statistics], {function, erlang, statistics, ['$dp'], value, [run_queue]}, []},
+        {[erlang, io], {function, erlang, statistics, [io], match, {{'_', input}, {'_', output}}}, []}
+    ]},
+    {reporters, [
+        <%-if (@exometer and @exometer['reporters']) -%>
+        <%- @exometer['reporters'].each_with_index do |reporter, i| -%>
+        {<%= reporter['type']  %>, [
+        <%- (reporter['config']).each_with_index do |(key, value), j| -%>
+            {<%= key %>, <%= value %>}<%= ',' if j < (reporter['config'].size - 1) %>
+        <%- end -%>
+        ]}<%= ',' if i < (@exometer['reporters'].size - 1) %>
+        <%- end end -%>
+    ]},
+    {subscribers, [
+    <%-if (@exometer and @exometer['subscribers']) -%>
+	<%- @exometer['subscribers'].each_with_index do |subscriber, i| -%>
+        {<%= subscriber['reporter']  %>, <%= subscriber['metric'] %>, <%= subscriber['datapoint'] %>, <%= subscriber['interval'] %>}
+    <%- end end -%>
+    ]}
  ]},
 
  {mnesia, [

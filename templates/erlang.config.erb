@@ -24,7 +24,7 @@
     {subscribers, [
     <%-if (@exometer and @exometer['subscribers']) -%>
 	<%- @exometer['subscribers'].each_with_index do |subscriber, i| -%>
-        {<%= subscriber['reporter']  %>, <%= subscriber['metric'] %>, <%= subscriber['datapoint'] %>, <%= subscriber['interval'] %>}
+        {<%= subscriber['reporter']  %>, <%= subscriber['metric'] %>, <%= subscriber['datapoint'] %>, <%= subscriber['interval'] %>}<%= ',' if i < (@exometer['subscribers'].size - 1) %>
     <%- end end -%>
     ]}
  ]},
